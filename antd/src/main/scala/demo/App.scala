@@ -18,6 +18,7 @@ import typings.antd.components.{List => AntList, _}
 import typings.antd.components.Form.{Form => FormItem}
 import typings.antd.notificationMod.{ArgsProps, IconType, default => Notification}
 import typings.antd.tableInterfaceMod.{ColumnGroupType, ColumnType}
+import typings.antd.textAreaMod.TextAreaRef
 import typings.moment.mod.Moment
 import typings.moment.mod.unitOfTime.DurationConstructor
 import typings.moment.{mod => moment}
@@ -30,6 +31,7 @@ import typings.react.mod.CSSProperties
 import typings.std.global.console
 
 import scala.scalajs.js
+import scala.scalajs.js.JSON
 import scala.scalajs.js.annotation.JSImport
 
 @JSImport("antd/dist/antd.css", JSImport.Default)
@@ -186,12 +188,26 @@ object CSS extends js.Any
 
     val renderIcon = section(h2("Icon"), AntdIcon(HomeOutlinedIcon))
 
+//    val inputRef = useRef[InputRef](null)
+    val textAreaRef = useRef[TextAreaRef](null)
     val renderInput = section(
       h2("Input"),
       Input
         .addonBefore(AntdIcon(UserOutlinedIcon))
-        .placeholder("Basic usage")
-        .onChange(event => console.log(event.target_ChangeEvent.value))
+        .placeholder("Basic input")
+        .onChange(event => console.log(event.target_ChangeEvent.value)),
+//        .withRef(inputRef)
+//        .onKeyDown { e =>
+//          if (e.key == "Escape") inputRef.current.blur()
+//        }
+    section(
+       Input.TextArea
+         .placeholder("Basic text area")
+         .withRef(textAreaRef)
+         .onKeyDown { e =>
+           if (e.key == "Escape") textAreaRef.current.blur()
+         }
+       )
     )
 
     val renderPassword =
