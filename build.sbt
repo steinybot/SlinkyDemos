@@ -1,19 +1,5 @@
 import scala.sys.process.Process
 
-/**
- * Custom task to start demo with webpack-dev-server, use as `<project>/start`.
- * Just `start` also works, and starts all frontend demos
- *
- * After that, the incantation is this to watch and compile on change:
- * `~<project>/fastOptJS::webpack`
- */
-lazy val start = TaskKey[Unit]("start")
-
-/** Say just `dist` or `<project>/dist` to make a production bundle in
- * `docs` for github publishing
- */
-lazy val dist = TaskKey[File]("dist")
-
 lazy val baseSettings: Project => Project =
   _.enablePlugins(ScalaJSPlugin)
     .settings(
@@ -43,22 +29,7 @@ lazy val `storybook-react` = project
 
       baseDirectory.value
     },
-    stFlavour := Flavour.Slinky,
-    /** This is not suitable for development, but effective for demo.
-      * Run `yarn storybook` commands yourself, and run `~storybook-react/fastOptJS` from sbt
-      */
-    start := {
-      (Compile / fastOptJS).value
-      if (scala.util.Properties.isWin) Process("yarn storybook", baseDirectory.value).run()
-      else Process("bash -ci 'yarn storybook'", baseDirectory.value).run()
-    },
-    dist := {
-      val distFolder = (ThisBuild / baseDirectory).value / "docs" / moduleName.value
-      (Compile / fullOptJS).value
-      if (scala.util.Properties.isWin) Process("yarn dist", baseDirectory.value).run()
-      else Process("bash -ci 'yarn dist'", baseDirectory.value).run()
-      distFolder
-    }
+    stFlavour := Flavour.Slinky
   )
 
 /** Note: This can't use scalajs-bundler (at least I don't know how),
