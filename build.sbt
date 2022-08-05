@@ -1,29 +1,5 @@
 import scala.sys.process.Process
 
-Global / stRemoteCache := RemoteCache.S3Aws(
-  bucket = "scalablytyped-demos",
-  region = "eu-central-1",
-  prefix = Some("st-cache")
-)
-
-Global / onLoad := {
-  println("""*
-            |* Welcome to ScalablyTyped demos!
-            |*
-            |* These demos demonstrate how to use third party react components with Slinky.
-            |*
-            |* For documentation see https://scalablytyped.org .
-            |*
-            |* Note that when you change any conversion options or add/remove libraries a new conversion will be triggered.
-            |* This is somewhat slow (could be minutes, depending) but it'll only happen once for a given conversion.
-            |* If the conversion runs in a memory-constrained context like an IDE import, it might take MUCH longer.
-            |*""".stripMargin)
-  (Global / onLoad).value
-}
-
-// Uncomment if you want to remove debug output
-//Global / stQuiet := true
-
 /**
  * Custom task to start demo with webpack-dev-server, use as `<project>/start`.
  * Just `start` also works, and starts all frontend demos
